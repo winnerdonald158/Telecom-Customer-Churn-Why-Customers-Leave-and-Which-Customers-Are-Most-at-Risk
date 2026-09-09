@@ -1,0 +1,21 @@
+                                      Business Question
+Why are customers leaving? 
+
+
+                                         Query:
+SELECT
+    Churn_Category,
+    Churn_Reason,
+    COUNT(*) AS total_customers
+FROM telecom_customer
+WHERE Customer_Status = 'Churned'
+GROUP BY Churn_Category, Churn_Reason
+ORDER BY total_customers DESC;
+
+                                          Insight:
+841 customers churned  because of Competitors related reason, why  321 churned because they were dissatisfied, 314 customers churned because of attitude, then 211 churned
+because of our price then others reason
+
+                                         Recommendation:
+Review competitor offerings, pricing, devices, and service benefits to understand where customers perceive greater value, then identify areas where the company's own offering 
+and customer communication can be strengthened.
