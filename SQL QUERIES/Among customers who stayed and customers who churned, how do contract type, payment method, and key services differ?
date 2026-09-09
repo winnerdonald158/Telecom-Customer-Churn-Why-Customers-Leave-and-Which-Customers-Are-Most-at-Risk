@@ -1,0 +1,75 @@
+                                                          BUSINESS Question  
+among customers who stayed and customers who churned, how do contract type, payment method, and key services differ?
+
+                                                            Query i
+SELECT
+    Contract,
+    Customer_Status,
+    COUNT(*) AS total_customers,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (PARTITION BY Contract),
+        2
+    ) AS percentage_within_contract
+FROM telecom_customer
+WHERE Customer_Status IN ('Churned', 'Stayed')
+GROUP BY Contract, Customer_Status
+ORDER BY Contract, Customer_Status;
+
+
+                                                                 Query ii
+SELECT
+    Payment_Method,
+    Customer_Status,
+    COUNT(*) AS total_customers,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (PARTITION BY Payment_Method),
+        2
+    ) AS percentage_within_payment_method
+FROM telecom_customer
+WHERE Customer_Status IN ('Churned', 'Stayed')
+GROUP BY Payment_Method, Customer_Status
+ORDER BY Payment_Method, Customer_Status;
+
+                                                                      Query iii
+SELECT
+    Online_Security,
+    Customer_Status,
+    COUNT(*) AS total_customers,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (PARTITION BY Online_Security),
+        2
+    ) AS percentage
+FROM telecom_customer
+WHERE Customer_Status IN ('Churned', 'Stayed')
+GROUP BY Online_Security, Customer_Status
+ORDER BY Online_Security, Customer_Status;
+
+                                                                            Query iv
+SELECT
+    Online_Backup,
+    Customer_Status,
+    COUNT(*) AS total_customers,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (PARTITION BY Online_Backup),
+        2
+    ) AS percentage
+FROM telecom_customer
+WHERE Customer_Status IN ('Churned', 'Stayed')
+GROUP BY Online_Backup, Customer_Status
+ORDER BY Online_Backup, Customer_Status;
+
+
+
+                                                                       INSIGHT:
+Contract type, payment method, and service adoption show differences between stayed and churned customers. 
+Month-to-month customers showed higher churn proportions, while two-year contract customers have the highest proportion of stayed customers. 
+Mailed-check customers also showed a higher proportion of churned customers, while customers using credit cards show a higher proportion of stayed customers. 
+Customers without Online Security and Online Backup showed higher churn proportions than customers who subscribed to these services
+
+Recommendation
+Increase adoption of services associated with lower churn by clearly communicating their value during onboarding and through targeted retention campaigns, 
+particularly among month-to-month and other high-risk customers
