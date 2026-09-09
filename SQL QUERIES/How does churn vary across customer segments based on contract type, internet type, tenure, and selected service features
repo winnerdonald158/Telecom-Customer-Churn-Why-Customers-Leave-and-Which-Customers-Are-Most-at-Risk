@@ -1,0 +1,41 @@
+                                     BUSINESS Question  
+How does churn vary across customer segments based on contract type, internet type, tenure, and selected service features?
+
+                                        
+                                     Query
+SELECT
+Contract,
+Internet_Type,
+COUNT(*) total_customers,
+SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END) AS chunred_customers,
+ROUND(SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END)* 100.0/COUNT(*),2) AS churn_rate
+FROM telecom_customer
+GROUP BY Contract,Internet_Type
+ORDER BY churn_rate DESC;
+
+                                         INSIGHT:
+The data above shows that the month-to-month contract type had the highest churn rate for all the various internet types. 
+
+                                
+                                      Possible drivers
+Further analysis was made and it shows that month to month customers who did not subscribe to the key services had the highest number of churn rate suggesting that not 
+having these services was associated with higher churn
+
+SELECT
+Contract,
+Internet_Type,
+COUNT(*) total_customers,
+SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END) AS chunred_customers,
+ROUND(SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END)* 100.0/COUNT(*),2) AS churn_rate,
+CASE WHEN Online_Backup = 'Yes' THEN 1 
+ELSE 0
+END AS Online
+FROM telecom_customer
+GROUP BY Contract,Internet_Type,CASE WHEN Online_Backup = 'Yes' THEN 1 
+ELSE 0
+END
+ORDER BY churn_rate DESC;
+
+                                                           Recommendation 
+Educating or pointing out or Making the customers take note of the benefit of subscribing to the key services before even they get onboard,this can at least make those that did not
+plan to subscribe, subscribe to the services
