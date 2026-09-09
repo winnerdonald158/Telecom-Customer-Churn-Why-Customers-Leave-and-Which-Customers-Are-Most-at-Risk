@@ -2,7 +2,9 @@
 # Telecom Customer Churn Analysis
 
 **Tools:** PostgreSQL | Power BI
+
 **Project Type:** Telecom Analytics | Customer Retention
+
 **Focus:** Customer Churn | Customer Behavior | Retention Risk
 
 ---
