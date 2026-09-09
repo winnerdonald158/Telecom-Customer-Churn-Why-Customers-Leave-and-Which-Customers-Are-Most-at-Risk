@@ -1,0 +1,54 @@
+                                                      BUSINESS Question 
+How does the churn rate change as customer tenure increases, and which tenure group has the highest churn rate?
+
+                                 Query
+SELECT
+CASE WHEN Tenure_in_Months BETWEEN 1 AND 12 THEN '1-12 Months'
+WHEN Tenure_in_Months BETWEEN 13 AND 24 THEN '13-24 Months'
+WHEN Tenure_in_Months BETWEEN 25 AND 36 THEN '25-36 Months'
+WHEN Tenure_in_Months BETWEEN 37 AND 48 THEN '37-48 Months'
+ELSE '49+'
+END AS customers_groups,
+COUNT(*) total_customers,
+SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END) AS churn_customers,
+ROUND(SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END)* 100.0/COUNT(*),2) AS churn_rate
+FROM telecom_customer
+GROUP BY CASE WHEN Tenure_in_Months BETWEEN 1 AND 12 THEN '1-12 Months'
+WHEN Tenure_in_Months BETWEEN 13 AND 24 THEN '13-24 Months'
+WHEN Tenure_in_Months BETWEEN 25 AND 36 THEN '25-36 Months'
+WHEN Tenure_in_Months BETWEEN 37 AND 48 THEN '37-48 Months'
+ELSE '49+'
+END
+ORDER BY churn_rate DESC;
+
+                                             INSIGHT:
+Churn rate generally decreases as customer tenure increases.
+
+
+                                        Possible drivers:
+Further analysis shows that Customers with shorter tenure, particularly those on month-to-month contracts, showed higher churn rates. 
+This suggests that newer customers short term  contracts may be more likely to churn early.
+
+SELECT
+Contract,
+CASE WHEN Tenure_in_Months BETWEEN 1 AND 12 THEN '1-12 Months'
+WHEN Tenure_in_Months BETWEEN 13 AND 24 THEN '13-24 Months'
+WHEN Tenure_in_Months BETWEEN 25 AND 36 THEN '25-36 Months'
+WHEN Tenure_in_Months BETWEEN 37 AND 48 THEN '37-48 Months'
+ELSE '49+'
+END AS customers_groups,
+COUNT(*) total_customers,
+SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END) AS churn_customers,
+ROUND(SUM(CASE WHEN Customer_Status ='Churned' THEN 1 ELSE 0 END)* 100.0/COUNT(*),2) AS churn_rate
+FROM telecom_customer
+GROUP BY Contract,CASE WHEN Tenure_in_Months BETWEEN 1 AND 12 THEN '1-12 Months'
+WHEN Tenure_in_Months BETWEEN 13 AND 24 THEN '13-24 Months'
+WHEN Tenure_in_Months BETWEEN 25 AND 36 THEN '25-36 Months'
+WHEN Tenure_in_Months BETWEEN 37 AND 48 THEN '37-48 Months'
+ELSE '49+'
+END
+ORDER BY churn_rate DESC;
+
+
+                                                            Recommendation:
+Strengthen  retention effort for early customers by communicating the value of the company services to them and also by encouraging long-term plan where appropriate
