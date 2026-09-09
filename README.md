@@ -5,9 +5,6 @@
 **Project Type:** Telecom Analytics | Customer Retention
 **Focus:** Customer Churn | Customer Behavior | Retention Risk
 
-[View Detailed Report on GitHub]
-[Back to Portfolio]
-
 ---
 
 ## Project Overview
@@ -125,7 +122,7 @@ The Power BI dashboard brings the main findings together through:
 * Churn Rate
 * Total Customer Revenue
 * Customer Churn by Category
-* Churn by Contract and Internet Type
+* Churn by Contract
 * Churn by Tenure
 * Stayed vs Churned Customers by Payment Method
 
@@ -189,7 +186,7 @@ The dashboard includes:
 
 Based on the analysis, I recommend:
 
-* Benchmark competing offers to understand what customers perceive as better and where the current offer may be falling behind.
+* Review competing offers to understand what customers perceive as better and where the current offer may be falling behind.
 * Give greater retention attention to **month-to-month customers**, particularly where other risk indicators are present.
 * Strengthen the onboarding experience for newer customers and clearly communicate the benefits of key services.
 * Monitor customer groups with higher churn proportions by payment method.
