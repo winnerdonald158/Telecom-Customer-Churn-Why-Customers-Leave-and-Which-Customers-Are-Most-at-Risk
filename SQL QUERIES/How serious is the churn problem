@@ -1,0 +1,47 @@
+                                                         Question 1 — How serious is the churn problem?
+What percentage of customers have churned, stayed, or recently joined, and what customer revenue or monthly charges are associated with the churned population?
+
+
+                               Query:
+SELECT
+    COUNT(*) total_customers,
+    SUM(CASE
+        WHEN Customer_Status ='Churned' THEN 1
+        ELSE 0 END) AS chunred_customers,
+
+    ROUND(
+        SUM(CASE WHEN Customer_Status ='Churned'
+        THEN 1 ELSE 0 END)* 100.0/COUNT(*),2) AS churn_rate,
+
+    SUM(CASE
+    WHEN Customer_Status ='Churned' THEN Monthly_Charge
+    ELSE 0 END) AS monthly_churned,
+
+    SUM(CASE WHEN Customer_Status ='Churned' THEN Total_Revenue
+    ELSE 0 END) AS total_revenue
+FROM telecom_customer;
+Findings;
+26.54% of customers have churned, and they were associated with 3,684,459.8200 in historical total revenue, meaning roughly 1 in 4 customers have left the company.
+This represents an important retention problem that could affect recurring revenue of the company.
+
+                                Possible Drivers:
+Further analysis shows that our customers churned mostly because of competitor-related issues 
+
+SELECT
+    Churn_Category,
+    COUNT(*) AS churned_customers,
+    ROUND(
+        COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER (),
+        2
+    ) AS percentage_of_churn
+FROM telecom_customer
+WHERE Customer_Status = 'Churned'
+GROUP BY Churn_Category
+ORDER BY churned_customers DESC;
+
+                                        Recommendation:
+Trying to improve onboarding process for our customers and make the benefit of our services and product more visible to our customers can be  a way to reduce competitors related 
+churn issues or any other issues regarding our services and product
+
+
